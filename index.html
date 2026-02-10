@@ -12,9 +12,9 @@
         }
 
         :root {
-            --primary: #8B4789;
-            --primary-dark: #6B3668;
-            --primary-light: #A85BA3;
+            --primary: #5C1F5F;
+            --primary-dark: #1a0a1d;
+            --primary-light: #7a3f82;
             --accent: #D4AF37;
             --text-dark: #2C2C2C;
             --text-light: #666666;
@@ -44,7 +44,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(135deg, #5C1F5F 0%, #1a0a1d 100%);
             color: white;
             padding: 50px 30px;
             text-align: center;
@@ -152,7 +152,7 @@
         textarea:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(139, 71, 137, 0.1);
+            box-shadow: 0 0 0 3px rgba(92, 31, 95, 0.1);
         }
 
         textarea {
@@ -194,7 +194,7 @@
         .radio-option:hover,
         .checkbox-option:hover {
             border-color: var(--primary);
-            background: rgba(139, 71, 137, 0.02);
+            background: rgba(92, 31, 95, 0.02);
         }
 
         input[type="radio"],
@@ -233,7 +233,7 @@
         }
 
         .info-box {
-            background: rgba(139, 71, 137, 0.05);
+            background: rgba(92, 31, 95, 0.05);
             border-left: 4px solid var(--primary);
             padding: 14px 16px;
             border-radius: 4px;
@@ -309,14 +309,14 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(135deg, #5C1F5F 0%, #1a0a1d 100%);
             color: white;
-            box-shadow: 0 4px 15px rgba(139, 71, 137, 0.3);
+            box-shadow: 0 4px 15px rgba(92, 31, 95, 0.3);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(139, 71, 137, 0.4);
+            box-shadow: 0 6px 20px rgba(92, 31, 95, 0.4);
         }
 
         .btn-primary:active {
@@ -337,7 +337,7 @@
 
         .btn-secondary:hover {
             border-color: var(--primary);
-            background: rgba(139, 71, 137, 0.05);
+            background: rgba(92, 31, 95, 0.05);
         }
 
         .footer-note {
@@ -369,7 +369,7 @@
         }
 
         .spinner {
-            border: 4px solid rgba(139, 71, 137, 0.1);
+            border: 4px solid rgba(92, 31, 95, 0.1);
             border-top: 4px solid var(--primary);
             border-radius: 50%;
             width: 40px;
@@ -381,6 +381,23 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        .demo-link {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #5C1F5F 0%, #1a0a1d 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .demo-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(92, 31, 95, 0.3);
         }
 
         @media (max-width: 600px) {
@@ -439,12 +456,12 @@
                         <label>Você já possui cadastro na Nuvem Shop? <span class="required">*</span></label>
                         <div class="radio-group">
                             <div class="radio-option">
-                                <input type="radio" id="cadastro_sim" name="cadastro_nuvem" value="sim" required>
-                                <label for="cadastro_sim">Sim, já tenho cadastro</label>
+                                <input type="radio" id="cadastro_sim" name="cadastro_nuvem" value="sim tenho conta" required>
+                                <label for="cadastro_sim">Sim, tenho conta na Nuvem Shop</label>
                             </div>
                             <div class="radio-option">
-                                <input type="radio" id="cadastro_nao" name="cadastro_nuvem" value="nao" required>
-                                <label for="cadastro_nao">Não, vou criar meu primeiro</label>
+                                <input type="radio" id="cadastro_nao" name="cadastro_nuvem" value="nao tenho conta" required>
+                                <label for="cadastro_nao">Não, não tenho conta</label>
                             </div>
                         </div>
                     </div>
@@ -530,23 +547,33 @@
                     </div>
                 </div>
 
+                <div class="form-section">
+                    <div class="form-group">
+                        <label>Veja como ficará a sua loja <span class="required">*</span></label>
+                        <p style="font-size: 14px; color: var(--text-light); margin-bottom: 12px;">Clique no link abaixo para visualizar uma loja modelo e entender como funcionará a sua:</p>
+                        <a href="https://suaperfumaria.lojavirtualnuvem.com.br/" target="_blank" class="demo-link">
+                            Visualizar Loja Modelo
+                        </a>
+                    </div>
+                </div>
+
                 <div class="form-divider"></div>
 
                 <div class="form-section">
                     <div class="form-group">
-                        <label>Você vai usar o site para fazer DROP? <span class="required">*</span></label>
+                        <label>Como você deseja vender? <span class="required">*</span></label>
                         <div class="radio-group">
                             <div class="radio-option">
-                                <input type="radio" id="drop_sim" name="usar_drop" value="sim" required>
-                                <label for="drop_sim">Sim, vou fazer drops de produtos</label>
+                                <input type="radio" id="drop_sim" name="usar_drop" value="sim drop" required>
+                                <label for="drop_sim">Sim, vou utilizar o serviço de DROP do Club</label>
                             </div>
                             <div class="radio-option">
-                                <input type="radio" id="drop_nao" name="usar_drop" value="nao" required>
-                                <label for="drop_nao">Não, vou vender com estoque disponível</label>
+                                <input type="radio" id="drop_nao" name="usar_drop" value="nao drop" required>
+                                <label for="drop_nao">Não, não pretendo vender por DROP</label>
                             </div>
                         </div>
                         <div class="info-box">
-                            💡 DROP = Você anuncia um produto com prazo e os clientes compram antes de você receber do fornecedor
+                            💡 <strong>O que é DROP?</strong> É quando você vende o produto através do seu site, e a GO Perfumaria faz a entrega direto para seu cliente. Assim você não precisa manter estoque!
                         </div>
                     </div>
                 </div>
@@ -604,8 +631,8 @@
                 </div>
 
                 <div class="footer-note">
-                    <p>Ao enviar este formulário, você aceita nossa política de privacidade e concorda em receber contato via e-mail e WhatsApp.<br>
-                    <a href="#">Leia nossa política de privacidade</a></p>
+                    <p>Um serviço supervisionado pela <strong>GO Perfumaria / Club de Franqueados</strong><br><br>
+                    Dúvidas? <a href="https://wa.me/seuwhatsapp" target="_blank">Entre em contato com nosso suporte</a></p>
                 </div>
             </form>
         </div>
