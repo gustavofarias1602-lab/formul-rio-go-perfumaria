@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Criação de Loja Online | GO Perfumaria</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8B4789;
+            --primary-dark: #6B3668;
+            --primary-light: #A85BA3;
+            --accent: #D4AF37;
+            --text-dark: #2C2C2C;
+            --text-light: #666666;
+            --bg-light: #F8F6F1;
+            --bg-white: #FFFFFF;
+            --border-color: #E8E4DF;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --error: #E74C3C;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, #F5F1EB 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            background: var(--bg-white);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .header-accent {
+            display: inline-block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            margin-top: 16px;
+            border-radius: 2px;
+        }
+
+        .form-container {
+            padding: 40px 30px;
+        }
+
+        .form-section {
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-section:nth-child(1) { animation-delay: 0.1s; }
+        .form-section:nth-child(2) { animation-delay: 0.2s; }
+        .form-section:nth-child(3) { animation-delay: 0.3s; }
+        .form-section:nth-child(4) { animation-delay: 0.4s; }
+        .form-section:nth-child(5) { animation-delay: 0.5s; }
+        .form-section:nth-child(6) { animation-delay: 0.6s; }
+        .form-section:nth-child(7) { animation-delay: 0.7s; }
+        .form-section:nth-child(8) { animation-delay: 0.8s; }
+        .form-section:nth-child(9) { animation-delay: 0.9s; }
+        .form-section:nth-child(10) { animation-delay: 1s; }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .required {
+            color: var(--error);
+            font-weight: 700;
+        }
+
+        .help-text {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 6px;
+            font-weight: 400;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="file"],
+        textarea {
+            padding: 12px 14px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: var(--bg-white);
+            color: var(--text-dark);
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 71, 137, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-option,
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-option:hover,
+        .checkbox-option:hover {
+            border-color: var(--primary);
+            background: rgba(139, 71, 137, 0.02);
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+
+        input[type="radio"]:checked + label,
+        input[type="checkbox"]:checked + label {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .radio-option input[type="radio"]:checked,
+        .checkbox-option input[type="checkbox"]:checked {
+            border-color: var(--primary);
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        input[type="file"] {
+            cursor: pointer;
+            padding: 12px 14px;
+        }
+
+        .file-upload label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .info-box {
+            background: rgba(139, 71, 137, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 14px 16px;
+            border-radius: 4px;
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .warning-box {
+            background: rgba(255, 152, 0, 0.08);
+            border-left: 4px solid var(--warning);
+            padding: 14px 16px;
+            border-radius: 4px;
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .success-box {
+            background: rgba(76, 175, 80, 0.08);
+            border-left: 4px solid var(--success);
+            padding: 14px 16px;
+            border-radius: 4px;
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .form-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 32px 0;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 71, 137, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 71, 137, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: rgba(139, 71, 137, 0.05);
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 12px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .footer-note a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid rgba(139, 71, 137, 0.1);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 40px 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .form-container {
+                padding: 30px 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Crie Sua Loja Online</h1>
+            <p>Tudo o que você precisa para começar a vender perfumes online</p>
+            <div class="header-accent"></div>
+        </div>
+
+        <div class="form-container">
+            <form id="formCriacaoLoja" method="POST" enctype="multipart/form-data">
+                
+                <div class="form-section">
+                    <div class="section-title">Informações Pessoais</div>
+                    <div class="form-group">
+                        <label>Nome Completo <span class="required">*</span></label>
+                        <input type="text" name="nome_completo" placeholder="Seu nome completo" required>
+                        <div class="help-text">Como você gostaria de ser chamado</div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label>E-mail <span class="required">*</span></label>
+                        <input type="email" name="email" placeholder="seu.email@exemplo.com" required>
+                        <div class="help-text">Usaremos para contato e acesso à sua loja</div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label>Você já possui cadastro na Nuvem Shop? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="cadastro_sim" name="cadastro_nuvem" value="sim" required>
+                                <label for="cadastro_sim">Sim, já tenho cadastro</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="cadastro_nao" name="cadastro_nuvem" value="nao" required>
+                                <label for="cadastro_nao">Não, vou criar meu primeiro</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label>CPF ou CNPJ <span class="required">*</span></label>
+                        <input type="text" name="documento" placeholder="000.000.000-00 ou 00.000.000/0000-00" required>
+                        <div class="help-text">Necessário para a aprovação da sua loja</div>
+                    </div>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <div class="form-section">
+                    <div class="section-title">Endereço Completo</div>
+                    <div class="form-group">
+                        <label>Rua <span class="required">*</span></label>
+                        <input type="text" name="rua" placeholder="Nome da rua" required>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Número <span class="required">*</span></label>
+                            <input type="text" name="numero" placeholder="123" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Complemento</label>
+                            <input type="text" name="complemento" placeholder="Apt 401, Sala B (opcional)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Bairro <span class="required">*</span></label>
+                            <input type="text" name="bairro" placeholder="Seu bairro" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CEP <span class="required">*</span></label>
+                            <input type="text" name="cep" placeholder="00000-000" maxlength="9" required>
+                            <div class="help-text">Formato: 00000-000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <div class="form-section">
+                    <div class="section-title">Informações da Loja</div>
+                    <div class="form-group">
+                        <label>Telefone / WhatsApp da Loja <span class="required">*</span></label>
+                        <input type="tel" name="telefone" placeholder="(11) 98765-4321" required>
+                        <div class="help-text">Use o formato: (DDD) 9XXXX-XXXX. Este número será exibido na sua loja (pode ser alterado depois)</div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label>Nome da Sua Loja <span class="required">*</span></label>
+                        <input type="text" name="nome_loja" placeholder="Ex: Perfumes Premium da Maria" required>
+                        <div class="help-text">Se ainda não decidiu, escreva "Não tenho". Você poderá alterar depois</div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label>Instagram da Loja (ou pessoal) <span class="required">*</span></label>
+                        <input type="text" name="instagram" placeholder="@sua_loja ou @seu_usuario" required>
+                        <div class="help-text">Apenas o @ (ex: @meuperfil). Será vinculado na sua loja online</div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label>Logo da Sua Loja</label>
+                        <input type="file" name="logo" accept="image/*">
+                        <div class="help-text">Faça upload da logo (PNG ou JPG, máx 5MB). Não obrigatório - você pode enviar depois</div>
+                    </div>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label>Você vai usar o site para fazer DROP? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="drop_sim" name="usar_drop" value="sim" required>
+                                <label for="drop_sim">Sim, vou fazer drops de produtos</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="drop_nao" name="usar_drop" value="nao" required>
+                                <label for="drop_nao">Não, vou vender com estoque disponível</label>
+                            </div>
+                        </div>
+                        <div class="info-box">
+                            💡 DROP = Você anuncia um produto com prazo e os clientes compram antes de você receber do fornecedor
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <div class="form-section">
+                    <div class="section-title">Confirmações Importantes</div>
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="confirma_documentos" name="confirma_documentos" required>
+                                <label for="confirma_documentos">Entendo que nosso suporte enviará um e-mail solicitando documentos (foto da CNH ou RG) para aprovação da loja no servidor</label>
+                            </div>
+                        </div>
+                        <div class="warning-box">
+                            ⚠️ Os documentos são obrigatórios para a ativação e veiculação da sua loja online
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="confirma_prazo" name="confirma_prazo" required>
+                                <label for="confirma_prazo">Confirmo que aguardarei até 10 dias úteis para a entrega da minha loja, a partir do envio do e-mail solicitando os documentos</label>
+                            </div>
+                        </div>
+                        <div class="success-box">
+                            ✓ Prazo: 10 dias úteis após envio da documentação
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="aceita_termos" name="aceita_termos" required>
+                                <label for="aceita_termos">Li e concordo com os termos de serviço</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="reset" class="btn-secondary">Limpar Formulário</button>
+                    <button type="submit" class="btn-primary" id="btnSubmit">Criar Minha Loja</button>
+                </div>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Enviando formulário...</p>
+                </div>
+
+                <div class="footer-note">
+                    <p>Ao enviar este formulário, você aceita nossa política de privacidade e concorda em receber contato via e-mail e WhatsApp.<br>
+                    <a href="#">Leia nossa política de privacidade</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('formCriacaoLoja');
+        const btnSubmit = document.getElementById('btnSubmit');
+        const loading = document.getElementById('loading');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            loading.classList.add('active');
+            btnSubmit.disabled = true;
+
+            const formData = new FormData(this);
+            
+            const dados = {
+                nome_completo: formData.get('nome_completo'),
+                email: formData.get('email'),
+                cadastro_nuvem: formData.get('cadastro_nuvem'),
+                documento: formData.get('documento'),
+                rua: formData.get('rua'),
+                numero: formData.get('numero'),
+                complemento: formData.get('complemento'),
+                bairro: formData.get('bairro'),
+                cep: formData.get('cep'),
+                telefone: formData.get('telefone'),
+                nome_loja: formData.get('nome_loja'),
+                instagram: formData.get('instagram'),
+                usar_drop: formData.get('usar_drop'),
+                data_envio: new Date().toLocaleString('pt-BR')
+            };
+
+            try {
+                const response = await fetch('/api/enviar-dados', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                const resultado = await response.json();
+
+                if (response.ok) {
+                    alert('✓ Formulário recebido!\n\nEm breve nosso time de suporte entrará em contato no e-mail fornecido.\n\nObrigado por escolher GO Perfumaria!');
+                    form.reset();
+                    loading.classList.remove('active');
+                    btnSubmit.disabled = false;
+                } else {
+                    alert('❌ Erro ao enviar formulário: ' + resultado.erro);
+                    loading.classList.remove('active');
+                    btnSubmit.disabled = false;
+                }
+            } catch (erro) {
+                console.error('Erro:', erro);
+                alert('❌ Erro ao enviar. Verifique sua conexão e tente novamente.');
+                loading.classList.remove('active');
+                btnSubmit.disabled = false;
+            }
+        });
+
+        const telefoneInput = document.querySelector('input[name="telefone"]');
+        if (telefoneInput) {
+            telefoneInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 0) {
+                    value = '(' + value.substring(0, 2) + ') ' + value.substring(2, 7) + '-' + value.substring(7, 11);
+                }
+                e.target.value = value;
+            });
+        }
+
+        const cepInput = document.querySelector('input[name="cep"]');
+        if (cepInput) {
+            cepInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 5) {
+                    value = value.substring(0, 5) + '-' + value.substring(5, 8);
+                }
+                e.target.value = value;
+            });
+        }
+    </script>
+</body>
+</html>
