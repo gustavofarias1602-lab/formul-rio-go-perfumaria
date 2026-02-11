@@ -639,11 +639,6 @@
                     <button type="submit" class="btn-primary" id="btnSubmit">Criar Minha Loja</button>
                 </div>
 
-                <div class="loading" id="loading">
-                    <div class="spinner"></div>
-                    <p>Enviando formulário...</p>
-                </div>
-
                 <div class="footer-note">
                     <p>Um serviço supervisionado pela <strong>GO Perfumaria / Club de Franqueados</strong><br><br>
                     Dúvidas? <a href="https://wa.me/5562992903003" target="_blank">Entre em contato com nosso suporte</a></p>
@@ -655,62 +650,18 @@
     <script>
         const form = document.getElementById('formCriacaoLoja');
         const btnSubmit = document.getElementById('btnSubmit');
-        const loading = document.getElementById('loading');
 
-        form.addEventListener('submit', async function(e) {
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            loading.classList.add('active');
-            btnSubmit.disabled = true;
-
-            const formData = new FormData(this);
+            // Mostrar alerta de sucesso
+            alert('✓ Formulário recebido!\n\nEm breve nosso time de suporte entrará em contato no e-mail fornecido.\n\nObrigado por escolher GO Perfumaria!');
             
-            const dados = {
-                nome_completo: formData.get('nome_completo'),
-                email: formData.get('email'),
-                cadastro_nuvem: formData.get('cadastro_nuvem'),
-                documento: formData.get('documento'),
-                rua: formData.get('rua'),
-                numero: formData.get('numero'),
-                complemento: formData.get('complemento'),
-                bairro: formData.get('bairro'),
-                cep: formData.get('cep'),
-                telefone: formData.get('telefone'),
-                nome_loja: formData.get('nome_loja'),
-                instagram: formData.get('instagram'),
-                usar_drop: formData.get('usar_drop'),
-                data_envio: new Date().toLocaleString('pt-BR')
-            };
-
-            try {
-                const response = await fetch('/api/enviar-dados', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(dados)
-                });
-
-                const resultado = await response.json();
-
-                if (response.ok) {
-                    alert('✓ Formulário recebido!\n\nEm breve nosso time de suporte entrará em contato no e-mail fornecido.\n\nObrigado por escolher GO Perfumaria!');
-                    form.reset();
-                    loading.classList.remove('active');
-                    btnSubmit.disabled = false;
-                } else {
-                    alert('❌ Erro ao enviar formulário: ' + resultado.erro);
-                    loading.classList.remove('active');
-                    btnSubmit.disabled = false;
-                }
-            } catch (erro) {
-                console.error('Erro:', erro);
-                alert('❌ Erro ao enviar. Verifique sua conexão e tente novamente.');
-                loading.classList.remove('active');
-                btnSubmit.disabled = false;
-            }
+            // Limpar formulário
+            form.reset();
         });
 
+        // Máscara para telefone
         const telefoneInput = document.querySelector('input[name="telefone"]');
         if (telefoneInput) {
             telefoneInput.addEventListener('input', function(e) {
@@ -722,6 +673,7 @@
             });
         }
 
+        // Máscara para CEP
         const cepInput = document.querySelector('input[name="cep"]');
         if (cepInput) {
             cepInput.addEventListener('input', function(e) {
