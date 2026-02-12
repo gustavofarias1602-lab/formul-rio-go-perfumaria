@@ -651,15 +651,55 @@
         const form = document.getElementById('formCriacaoLoja');
         const btnSubmit = document.getElementById('btnSubmit');
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+      form.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-            // Mostrar alerta de sucesso
-            alert('Formulário recebido com sucesso! 🎉\n\nEm até 3 dias, um especialista em criação entrará em contato para dar seguimento na construção do seu site.\n\nParabéns! Esse foi um passo importante para a história da sua loja. Estamos felizes em estar com você nessa etapa de crescimento!\n\nVai pra cima! 💪');
-            
-            // Limpar formulário
-            form.reset();
-        });
+    // URL do Google Apps Script
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyJ3xB1DBBc5a5q7Zmt3mGqnfbe2RrztKBfDbELtTvMyZgd0rLKy_z8dNXqa_OGtcKk/exec';
+
+    // Coleta os dados do formulário
+    const formData = {
+        nome_completo: document.querySelector('input[name="nome_completo"]').value,
+        email: document.querySelector('input[name="email"]').value,
+        cadastro_nuvem: document.querySelector('input[name="cadastro_nuvem"]:checked').value,
+        documento: document.querySelector('input[name="documento"]').value,
+        rua: document.querySelector('input[name="rua"]').value,
+        numero: document.querySelector('input[name="numero"]').value,
+        complemento: document.querySelector('input[name="complemento"]').value,
+        bairro: document.querySelector('input[name="bairro"]').value,
+        cep: document.querySelector('input[name="cep"]').value,
+        telefone: document.querySelector('input[name="telefone"]').value,
+        nome_loja: document.querySelector('input[name="nome_loja"]').value,
+        instagram: document.querySelector('input[name="instagram"]').value,
+        usar_drop: document.querySelector('input[name="usar_drop"]:checked').value
+    };
+
+    // Desabilita o botão
+    btnSubmit.disabled = true;
+    btnSubmit.textContent = 'Enviando...';
+
+    // Envia para o Google Sheets
+    fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Mostrar alerta de sucesso
+        alert('Formulário recebido com sucesso! 🎉\n\nEm até 3 dias, um especialista em criação entrará em contato para dar seguimento na construção do seu site.\n\nParabéns! Esse foi um passo importante para a história da sua loja. Estamos felizes em estar com você nessa etapa de crescimento!\n\nVai pra cima! 💪');
+        
+        // Limpar formulário
+        form.reset();
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = 'Criar Minha Loja';
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        alert('Houve um erro ao enviar o formulário. Tente novamente.');
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = 'Criar Minha Loja';
+    });
+});
 
         // Máscara para telefone
         const telefoneInput = document.querySelector('input[name="telefone"]');
